@@ -1,65 +1,76 @@
 let profiles = [
-   {
-        username: 'eva',
-        gender : 'female',
+    {
+        username: 'Ammar',
+        gender : 'Male',
         age: 24,
-        birthday: '04 February 1990',
+        birthday: '09 February 1990',
     },
     {
         username: 'Mohammad',
         gender : 'Male',
         age: 24,
-        birthday: '04 May 1990',
+        birthday: '08 May 1990',
     },
     {
         username: 'Majd',
         gender : 'Female',
         age: 24,
-        birthday: '04 May 1990',
+        birthday: '09 May 1990',
     },
     {
-        username: 'Rawan',
+        username: 'Yaso',
         gender : 'Female',
         age: 24,
-        birthday: '05 May 1990',
+        birthday: '09 May 1990',
     }
 ]
 
-let profilesContainer = document.getElementById('birthday__profile-container')
-let currentDate= new Date();
-let  month = currentDate.toLocaleString('default', { month: 'long' });
-let day = currentDate.getDay();
-console.log(day)
+let profilesContainer = document.getElementById("birthday__profile-container");
+let currentDate = new Date ();
+let month = currentDate.getMonth() + 1;
+let day = currentDate.getDate();
+
 console.log(month);
+console.log(day);
 console.log(currentDate);
-for(let profile of profiles){
- let  birthday = profile.birthday.split(' ')
-    if(birthday[1] === month && birthday[0] == day ){
-    //Way 1 : The easy way
-        profilesContainer.innerHTML += ` <div class="birthday__profile">
-        <img src="assets/img/female.png" alt="">
+// console.log(typeof currentDate.toLocaleDateString());
+
+let counter = 0;
+for(let profile of profiles) {
+    let birthday = profile.birthday.split(" ");
+    
+    if (birthday[0] == day) {
+        //way 1
+        counter++;
+        profilesContainer.innerHTML +=` <div class="birthday__profile">
+        <img src="${setProfileImage(profile.gender)}" alt="">
         <div class="birthday__info">
             <p>${profile.username}</p>
-            <p> ${profile.age}</p>
+            <p>${profile.age}</p>
         </div>
     </div>`
-    //Way 2 : The hard way
-        //  let profileCard =  document.createElement('div')
-        // profileCard.className='birthday__profile';
-        // profilesContainer.appendChild(profileCard)
-        // let profileImg = document.createElement('img')
-        // profileImg.setAttribute('src','assets/img/female.png')
-        // profileCard.appendChild(profileImg);
-        // let birthdayInfo = document.createElement('div')
-        // birthdayInfo.className = 'birthday__info'
-        // profileCard.appendChild(birthdayInfo)
-        // let username = document.createElement('p')    
-        //username.appendChild(document.createTextNode(profile.username))
-        //birthdayInfo.appendChild(username)
-        //let age = document.createElement('p')    
-        //age.appendChild(document.createTextNode(profile.age))
-        //birthdayInfo.appendChild(age)
-        //console.log(profile)
     }
 }
-   
+document.getElementById("dayCounter").innerHTML = `${counter} birthdays today`;
+function setProfileImage (gender) {
+    let number = Math.floor(Math.random() * 3) + 1;
+    
+    if (gender == "Male") {
+        return `assets/img/male-${number}.png`
+    }
+    else {
+        return `assets/img/female-${number}.png`
+    }
+}
+
+function calcAge(CurrentYear , userYear) {
+    return CurrentYear - userYear
+}
+
+function clear () {
+    let cards = document.getElementById("birthday__profile-container").innerHTML = "";
+    counter = 0;
+    document.getElementById("dayCounter").innerHTML = `${counter} birthdays today`;
+}
+
+document.getElementById("btn__clear").onclick = clear;
